@@ -1,0 +1,128 @@
+<div class="key-box">
+    <h2>🔐 ĐĂNG NHẬP VIEW ANH</h2>
+
+    <input
+        type="text"
+        id="keyInput"
+        placeholder="Nhập key..."
+        autocomplete="off"
+        spellcheck="false"
+    >
+
+    <button type="button" onclick="loginKey()">
+        ĐĂNG NHẬP
+    </button>
+
+    <p id="keyStatus">Vui lòng nhập key để đăng nhập.</p>
+</div>
+
+<div id="appContent" style="display:none;">
+
+    <h2>🎮 GAME</h2>
+
+    <button onclick="openGame('FF MAX')">
+        🔥 FF MAX
+    </button>
+
+    <button onclick="openGame('FF TH')">
+        ⚡ FF TH
+    </button>
+
+    <h2>⚙️ CHỨC NĂNG</h2>
+
+    <button>AimLock</button>
+    <button>HeadLock</button>
+    <button>Bám Đầu</button>
+    <button>Fix Rung</button>
+    <button>Fix Lố</button>
+    <button>Nhẹ Tâm</button>
+    <button>Giảm Lạc Đạn</button>
+    <button>Êm Tâm</button>
+    <button>Khoá Tâm</button>
+    <button>Chống Band</button>
+    <button>Tối Ưu 120FPS</button>
+
+</div>
+
+<script>
+
+const VALID_KEYS = [
+    "VIEW-ANH-7K2P-9M4Q",
+    "VIEW-ANH-3X8N-5T6V",
+    "VIEW-ANH-1A7D-4F9K",
+    "VIEW-ANH-6Q2W-8E3R",
+    "VIEW-ANH-9Z5L-2C7M"
+];
+
+function loginKey() {
+
+    const input = document.getElementById("keyInput");
+    const status = document.getElementById("keyStatus");
+
+    const key = input.value
+        .trim()
+        .toUpperCase();
+
+    if (key === "") {
+        status.textContent = "⚠️ Vui lòng nhập key.";
+        status.style.color = "#ffaa00";
+        return;
+    }
+
+    if (VALID_KEYS.indexOf(key) !== -1) {
+
+        localStorage.setItem("VIEW_ANH_LOGIN", key);
+
+        document.getElementById("appContent").style.display = "block";
+
+        status.textContent = "✅ Đăng nhập thành công!";
+        status.style.color = "#00ff88";
+
+    } else {
+
+        document.getElementById("appContent").style.display = "none";
+
+        status.textContent = "❌ Key không đúng!";
+        status.style.color = "#ff4444";
+    }
+}
+
+
+// Tự đăng nhập lại nếu trước đó đã nhập key đúng
+window.addEventListener("DOMContentLoaded", function () {
+
+    const savedKey =
+        localStorage.getItem("VIEW_ANH_LOGIN");
+
+    if (
+        savedKey &&
+        VALID_KEYS.indexOf(savedKey) !== -1
+    ) {
+
+        document.getElementById("keyInput").value = savedKey;
+
+        document.getElementById("appContent").style.display = "block";
+
+        document.getElementById("keyStatus").textContent =
+            "✅ Đã đăng nhập.";
+
+        document.getElementById("keyStatus").style.color =
+            "#00ff88";
+    }
+
+});
+
+
+function openGame(game) {
+
+    if (game === "FF MAX") {
+        window.location.href = "freefiremax://";
+    }
+
+    if (game === "FF TH") {
+        window.location.href = "freefire://";
+    }
+
+}
+
+</script>
